@@ -432,7 +432,7 @@ Password must be atleast 8 characters.
 { "name": "Jane Doe", "email": "jane@example.com", "password": "secret123" }
 
 // Response 201
-{ "token": "eyJhbGci...", "user": { "id": "uuid", "name": "John Doe", "email": "john@example.com" } }
+{ "token": "eyJhbGci...", "user": { "id": "6ae6dc5e-0f72-494e-9a2d-e3e9dd1bf428", "name": "John Doe", "email": "john@example.com" } }
 ```
 
 #### POST /auth/login
@@ -545,6 +545,21 @@ Delete project (cascade delete tasks) (owner only)
 
 ```
 Response 204 No Content
+```
+
+#### GET /projects/:id/stats
+
+Get project's task counts by status/assignee
+
+```json
+// Response 200
+{
+    "total_tasks": 10,
+    "by_status": { "todo": 3, "in_progress": 5, "done": 2 },
+    "by_assignee": [
+        { "assignee_id": "6ae6dc5e-0f72-494e-9a2d-e3e9dd1bf428", "assignee_name": "Jane Doe", "count": 6 }
+    ]
+}
 ```
 
 ### Tasks
