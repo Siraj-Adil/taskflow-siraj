@@ -301,6 +301,7 @@ export async function createTask(req, res) {
             title,
             description,
             priority,
+            status,
             assignee_id: assigneeId,
             due_date,
         } = parsed.data;
@@ -339,12 +340,84 @@ export async function createTask(req, res) {
                 project_id: projectId,
                 description: description,
                 priority: priority,
+                status: status,
                 assignee_id: assigneeId,
                 due_date: due_date,
             },
         });
 
         return res.status(201).json(task);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            error: "internal server error",
+        });
+    }
+}
+
+// ROUTE GET /projects/:id/stats
+export async function getProjectStats(req, res) {
+    try {
+        const userId = req.user.user_id;
+        const projectId = req.params.id;
+
+        const project = await prisma.project.findUnique({
+            where: { id: projectId },
+            include: {
+                tasks: {
+                    include: {
+                        assignee: true,
+                    },
+                },
+            },
+        });
+
+        if (!project) {
+            return res.status(404).json({ error: "project not found" });
+        }
+
+        const isOwner = project.owner_id === userId;
+        const isAssigned = project.tasks.some((t) => t.assignee_id === userId);
+
+        if (!isOwner && !isAssigned) {
+            return res.status(403).json({ error: "forbidden" });
+        }
+
+        const total_tasks = project.tasks.length;
+
+        const by_status = {
+            todo: 0,
+            in_progress: 0,
+            done: 0,
+        };
+
+        const assigneeMap = new Map();
+
+        for (const task of project.tasks) {
+            // status count
+            by_status[task.status]++;
+
+            // by assignee
+            if (task.assignee_id && task.assignee) {
+                const id = task.assignee_id;
+
+                if (!assigneeMap.has(id)) {
+                    assigneeMap.set(id, {
+                        assignee_id: id,
+                        assignee_name: task.assignee.name,
+                        count: 0,
+                    });
+                }
+
+                assigneeMap.get(id).count++;
+            }
+        }
+
+        return res.status(200).json({
+            total_tasks,
+            by_status,
+            by_assignee: Array.from(assigneeMap.values()),
+        });
     } catch (err) {
         console.error(err);
         return res.status(500).json({

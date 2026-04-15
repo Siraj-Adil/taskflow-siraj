@@ -7,6 +7,7 @@ import {
     deleteProject,
     getTasks,
     createTask,
+    getProjectStats,
 } from "../controllers/project.controller.js";
 import auth from "../middleware/auth.middleware.js";
 
@@ -22,5 +23,6 @@ router.patch("/:id", updateProject);
 router.delete("/:id", deleteProject);
 router.get("/:id/tasks", getTasks);
 router.post("/:id/tasks", createTask);
+router.get("/:id/stats", getProjectStats);
 
 export default router;

@@ -38,7 +38,8 @@ TaskFlow is a backend API for a project and task management system with authenti
 ### Bonus Features
 
 -   Paginations on list endpoints
--   4 integration test suites (44 total test cases covering full API workflows)
+-   4 integration test suites (46 total test cases covering full API workflows)
+-   Project statistics endpoint (`GET /projects/:id/stats`) with task counts by status/assignee
 
 ---
 
@@ -177,7 +178,7 @@ taskflow-siraj/
 ```bash
 # 1. Clone the repository
 git clone https://github.com/your-username/taskflow.git
-cd taskflow
+cd taskflow-siraj
 
 # 2. Create environment file
 cp .env.example .env
@@ -383,7 +384,7 @@ Taskflow.postman_collection.json
 ## 8. Automatic Testing (Integration Tests)
 
 -   4 integration test suites using Jest + Supertest
--   44 total test cases covering full API workflows
+-   46 total test cases covering full API workflows
 
 ### Coverage Includes:
 

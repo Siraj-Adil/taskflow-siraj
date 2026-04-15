@@ -107,6 +107,23 @@ describe("Project API (Seeded DB)", () => {
         expect(res.statusCode).toBe(400);
     });
 
+    // GET PROJECT STATS (before project deletion)
+    it("should fetch project stats", async () => {
+        const res = await request(app)
+            .get(`/projects/${projectId}/stats`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.statusCode).toBe(200);
+
+        expect(res.body.total_tasks).toBeDefined();
+        expect(res.body.by_status).toBeDefined();
+        expect(res.body.by_assignee).toBeDefined();
+
+        expect(typeof res.body.total_tasks).toBe("number");
+        expect(typeof res.body.by_status).toBe("object");
+        expect(Array.isArray(res.body.by_assignee)).toBe(true);
+    });
+
     // DELETE PROJECT
     it("should delete project", async () => {
         const res = await request(app)
@@ -115,4 +132,15 @@ describe("Project API (Seeded DB)", () => {
 
         expect(res.statusCode).toBe(204);
     });
+
+    // NEGATIVE TEST: GET PROJECT STATS (after project deletion, should fail)
+    it("should return 404 for stats after project deletion", async () => {
+        const res = await request(app)
+            .get(`/projects/${projectId}/stats`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.statusCode).toBe(404);
+        expect(res.body.error).toBe("project not found");
+    });
+
 });
