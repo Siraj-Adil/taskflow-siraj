@@ -140,6 +140,7 @@ taskflow-siraj/
     │   │   ├── auth.controller.js
     │   │   ├── project.controller.js
     │   │   └── task.controller.js
+    │   │   └── user.controller.js
     │   │
     │   ├── middleware/
     │   │   └── auth.middleware.js      # JWT authentication guard
@@ -148,6 +149,7 @@ taskflow-siraj/
     │   │   ├── auth.routes.js
     │   │   ├── project.routes.js
     │   │   └── task.routes.js
+    │   │   └── user.routes.js
     │   │
     │   ├── utils/
     │   │   └── jwt.js                  # JWT token generation & verification
@@ -421,6 +423,14 @@ docker compose down
 
 All authenticated endpoints require: `Authorization: Bearer <token>`
 
+### API Documentation (Swagger)
+
+This project includes interactive API documentation using Swagger (OpenAPI).
+
+#### Swagger UI
+
+You can explore and test all endpoints directly from the browser at. `http://localhost:3000/api-docs`
+
 ### Authentication
 
 #### POST /auth/register
@@ -652,6 +662,38 @@ Delete task (owner & project member)
 
 ```
 Response 204 No Content
+```
+
+### Users
+
+#### GET /users
+
+```json
+// Response 200 — updated task
+{
+  "users": [
+    {
+      "id": "80fe1c4f-0da0-4ab4-bc65-38481944a4ec",
+      "name": "Test User",
+      "email": "test@example.com",
+      "password": "$2b$12$DpMCbE6VUXOBdc38IIk6M.UOd1nCuja1rAgEhXSbtatQGtf8qODqW",
+      "created_at": "2026-04-21T11:30:02.826Z"
+    }
+  ]
+}
+```
+
+### Health
+
+#### GET /health
+
+```json
+// Response 200 — updated task
+{
+  "status": "ok",
+  "uptime": 1070.21249158,
+  "timestamp": "2026-04-21T11:47:53.074Z"
+}
 ```
 
 ### Error Responses

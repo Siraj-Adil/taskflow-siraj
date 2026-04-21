@@ -3,7 +3,7 @@ import { z } from "zod";
 const description = z.string().optional();
 const priority = z.enum(["low", "medium", "high"]).optional();
 const status = z.enum(["todo", "in_progress", "done"]).optional();
-const assignee_id = z.uuid().optional();
+const assignee_id = z.uuid().nullable().optional();
 const due_date = z.coerce.date().optional();
 
 export const craeteTaskSchema = z.object({
