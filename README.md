@@ -425,11 +425,10 @@ All authenticated endpoints require: `Authorization: Bearer <token>`
 
 ### API Documentation (Swagger)
 
+#### Swagger UI (GET /docs)
+
 This project includes interactive API documentation using Swagger (OpenAPI).
-
-#### Swagger UI
-
-You can explore and test all endpoints directly from the browser at. `http://localhost:3000/api-docs`
+You can explore and test all endpoints directly from your browser at: `http://localhost:3000/docs`
 
 ### Authentication
 
@@ -567,7 +566,11 @@ Get project's task counts by status/assignee
     "total_tasks": 10,
     "by_status": { "todo": 3, "in_progress": 5, "done": 2 },
     "by_assignee": [
-        { "assignee_id": "6ae6dc5e-0f72-494e-9a2d-e3e9dd1bf428", "assignee_name": "Jane Doe", "count": 6 }
+        {
+            "assignee_id": "6ae6dc5e-0f72-494e-9a2d-e3e9dd1bf428",
+            "assignee_name": "Jane Doe",
+            "count": 6
+        }
     ]
 }
 ```
@@ -671,15 +674,15 @@ Response 204 No Content
 ```json
 // Response 200 — updated task
 {
-  "users": [
-    {
-      "id": "80fe1c4f-0da0-4ab4-bc65-38481944a4ec",
-      "name": "Test User",
-      "email": "test@example.com",
-      "password": "$2b$12$DpMCbE6VUXOBdc38IIk6M.UOd1nCuja1rAgEhXSbtatQGtf8qODqW",
-      "created_at": "2026-04-21T11:30:02.826Z"
-    }
-  ]
+    "users": [
+        {
+            "id": "80fe1c4f-0da0-4ab4-bc65-38481944a4ec",
+            "name": "Test User",
+            "email": "test@example.com",
+            "password": "$2b$12$DpMCbE6VUXOBdc38IIk6M.UOd1nCuja1rAgEhXSbtatQGtf8qODqW",
+            "created_at": "2026-04-21T11:30:02.826Z"
+        }
+    ]
 }
 ```
 
@@ -690,9 +693,9 @@ Response 204 No Content
 ```json
 // Response 200 — updated task
 {
-  "status": "ok",
-  "uptime": 1070.21249158,
-  "timestamp": "2026-04-21T11:47:53.074Z"
+    "status": "ok",
+    "uptime": 1070.21249158,
+    "timestamp": "2026-04-21T11:47:53.074Z"
 }
 ```
 

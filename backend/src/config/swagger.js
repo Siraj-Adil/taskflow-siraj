@@ -1,31 +1,33 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
 const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "TaskFlow API",
-      version: "1.0.0",
-      description: "API documentation for TaskFlow backend",
-    },
-    servers: [
-      {
-        url: "http://localhost:3000", // change after deployment
-      },
-    ],
-
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "TaskFlow API",
+            version: "1.0.0",
+            description: "API documentation for TaskFlow backend",
         },
-      },
-    },
-  },
+        servers: [
+            {
+                url:
+                    process.env.APP_URL ||
+                    `http://localhost:${process.env.PORT || 3000}`,
+            },
+        ],
 
-  apis: ["./src/routes/*.js"],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                },
+            },
+        },
+    },
+
+    apis: ["./src/routes/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
